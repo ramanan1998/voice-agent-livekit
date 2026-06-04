@@ -1,0 +1,15 @@
+# Core framework + the models/extras this agent uses.
+# silero        -> voice activity detection (cascade mode)
+# turn-detector -> end-of-turn detection (cascade mode)
+# openai        -> OpenAI Realtime speech-to-speech model (realtime mode)
+livekit-agents[silero,turn-detector,openai]~=1.5
+
+# SIP + dispatch APIs used by the scripts/ (usually pulled in by the line
+# above, but pinned here so the standalone scripts always work).
+livekit-api~=1.0
+
+# Optional but recommended for phone calls: telephony noise cancellation.
+# agent.py loads this defensively, so the agent runs even if it's absent.
+livekit-plugins-noise-cancellation~=0.2
+
+python-dotenv~=1.0
