@@ -97,11 +97,11 @@ dispatches. Keep this running while you do the steps below.
      (`lk sip inbound create`, or the dashboard).
 2. **Route calls to the agent.** Run:
    ```bash
-   python scripts/setup_inbound.py
+   python services/setup_inbound.py
    ```
    (Or configure the dispatch rule in the dashboard.) Edit `PROFILE` in that
    script to choose which prompt inbound callers get.
-3. **Call your number.** With `python src/agent.py dev` running, dial in and the
+3. **Call your number.** With `python services/agent.py dev` running, dial in and the
    agent answers.
 
 ---
@@ -111,14 +111,14 @@ dispatches. Keep this running while you do the steps below.
 LiveKit Phone Numbers can't place outbound calls yet, so use a SIP provider.
 
 1. **Register your provider's trunk** (one time). Fill in the constants at the
-   top of `scripts/setup_outbound_trunk.py`, then:
+   top of `python services/setup_outbound.py`, then:
    ```bash
-   python scripts/setup_outbound_trunk.py
+   python services/setup_outbound_trunk.py
    ```
    Copy the printed trunk ID into `.env.local` as `SIP_OUTBOUND_TRUNK_ID`.
 2. **Place a call** (with the worker running):
    ```bash
-   python scripts/make_outbound_call.py +14155550100 hr_screening
+   python services/agent_outbound.py +14155550100 customer_support
    ```
    The agent dials the number and runs the HR screening prompt. Omit the profile
    to use `customer_support`.
@@ -131,14 +131,14 @@ LiveKit Phone Numbers can't place outbound calls yet, so use a SIP provider.
 
 ## Customizing the prompt
 
-Open `src/profiles.py`. Each profile is a system prompt + an opening line +
+Open `services/profiles.py`. Each profile is a system prompt + an opening line +
 a voice. Edit the existing ones or add a new `AgentProfile` to `PROFILES`, then
 reference it by its `key` in the dispatch rule (inbound) or the dialer command
 (outbound). Tips for voice prompts: keep replies short, one question at a time,
 and no markdown or symbols (they get read aloud).
 
 To swap models (e.g. use Claude as the LLM, or your own provider keys instead of
-LiveKit Inference), change the `stt` / `llm` / `tts` lines in `src/agent.py`.
+LiveKit Inference), change the `stt` / `llm` / `tts` lines in `services/agent.py`.
 See https://docs.livekit.io/agents/models/ for the options.
 
 ---
@@ -149,8 +149,8 @@ See https://docs.livekit.io/agents/models/ for the options.
   against a live LiveKit project, real SIP trunks, or provider keys. Treat the
   first run as integration testing.
 - The spots most likely to need a small tweak for your exact SDK build are the
-  **SIP request field names** in `scripts/setup_outbound_trunk.py` and the
-  **dispatch-rule object names** in `scripts/setup_inbound.py` — these have
+  **SIP request field names** in `services/setup_outbound.py` and the
+  **dispatch-rule object names** in `services/setup_inbound.py` — these have
   shifted across versions. If something doesn't match, check the current shapes
   with `lk docs search "outbound trunk"` / `lk docs search "dispatch rule"` or
   the SIP API reference: https://docs.livekit.io/reference/telephony/sip-api/
