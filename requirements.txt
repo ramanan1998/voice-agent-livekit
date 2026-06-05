@@ -13,3 +13,6 @@ livekit-api~=1.0
 livekit-plugins-noise-cancellation~=0.2
 
 python-dotenv~=1.0
+fastapi~=0.115
+uvicorn[standard]~=0.30
+sqlmodel~=0.0.22

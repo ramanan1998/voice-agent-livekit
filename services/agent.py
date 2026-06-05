@@ -52,6 +52,7 @@ from livekit.agents import (
     inference,
     room_io,
 )
+from livekit.plugins.hume import TTS, VoiceById, VoiceProvider
 
 from profiles import AgentProfile, get_profile
 
@@ -104,8 +105,15 @@ def _build_cascade_session(profile: AgentProfile) -> AgentSession:
     return AgentSession(
         stt=inference.STT(model="deepgram/nova-3", language="multi"),
         llm=inference.LLM(model="openai/gpt-5.2-chat-latest"),
-        tts=inference.TTS(model="cartesia/sonic-3", voice=profile.voice),
-        vad=silero.VAD.load(),
+        # tts=inference.TTS(model="cartesia/sonic-3", voice=profile.voice),
+        tts=TTS(
+            voice=VoiceById(
+                id="f0ed2aeb-94c2-4d61-8cc4-e4af457f2d4c",
+                provider=VoiceProvider.custom,
+            ),
+            instant_mode=True,
+        ),
+        # vad=silero.VAD.load(),
         turn_handling=TurnHandlingOptions(turn_detection=MultilingualModel()),
     )
 

@@ -71,7 +71,7 @@ python -m livekit.agents download-files
 ### Test it locally first (no phone needed)
 
 ```bash
-python src/agent.py console
+python services/agent.py console
 ```
 
 This runs the agent in your terminal so you can talk to it and confirm the
@@ -80,7 +80,7 @@ pipeline and prompt work before wiring up telephony.
 ### Run it connected to LiveKit Cloud
 
 ```bash
-python src/agent.py dev
+python services/agent.py dev
 ```
 
 Now it's reachable from the web Agent Console, inbound calls, and outbound
