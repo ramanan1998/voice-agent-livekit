@@ -57,7 +57,10 @@ A small bit of **JSON metadata** tells the worker what to do:
 
 ```bash
 # 1. Install dependencies (a virtual environment is recommended)
-python -m venv .venv && source .venv/bin/activate
+python -m venv
+
+venv/Scripts/activate 
+
 pip install -r requirements.txt
 
 # 2. Configure credentials
