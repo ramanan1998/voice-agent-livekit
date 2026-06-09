@@ -96,7 +96,7 @@ from livekit import api
 load_dotenv(Path(__file__).resolve().parent.parent /".env.local")
 
 AGENT_NAME = "voice-agent"          # must match agent.py
-DEFAULT_PROFILE = "customer_support"
+DEFAULT_PROFILE = "ocean_crest_sales"
 
 
 async def make_call(phone_number: str, profile: str) -> None:
